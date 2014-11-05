@@ -1,0 +1,7 @@
+SSLProxyEngine On
+SSLProxyCheckPeerCN on
+SSLProxyCheckPeerExpire on
+ProxyPass <%= scope.lookupvar('foreman::config::passenger::suburi') -%> !
+ProxyPass / https://<%= @fqdn -%>:18443/
+ProxyPassReverse <%= scope.lookupvar('foreman::config::passenger::suburi') -%> !
+ProxyPassReverse / https://<%= @fqdn %>:18443/
