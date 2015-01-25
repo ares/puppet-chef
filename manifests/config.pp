@@ -10,16 +10,16 @@ class chef::config {
     # uncomment if you don't want to reconfigure chef every time (takes more time but is safer)
     # creates     => '/opt/chef'
   } ->
-  file { '/var/lib/puppet/ssl/private_keys/allin.example.com.pem':
-    source => '/var/opt/opscode/nginx/ca/allin.example.com.key',
+  file { "/var/lib/puppet/ssl/private_keys/${fqdn}.pem":
+    source => "/var/opt/opscode/nginx/ca/${fqdn}.key",
     ensure => 'present',
   } ->
-  file { '/var/lib/puppet/ssl/certs/allin.example.com.pem':
-    source => '/var/opt/opscode/nginx/ca/allin.example.com.crt',
+  file { "/var/lib/puppet/ssl/certs/${fqdn}.pem":
+    source => "/var/opt/opscode/nginx/ca/${fqdn}.crt",
     ensure => 'present',
   } ->
   file { '/var/lib/puppet/ssl/certs/ca.pem':
-    target => '/var/lib/puppet/ssl/certs/allin.example.com.pem',
+    target => "/var/lib/puppet/ssl/certs/${fqdn}.pem",
     ensure => 'link',
   }
 
