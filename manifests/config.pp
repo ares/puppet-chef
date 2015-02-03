@@ -10,6 +10,10 @@ class chef::config {
     # uncomment if you don't want to reconfigure chef every time (takes more time but is safer)
     # creates     => '/opt/chef'
   } ->
+  file { "/var/lib/puppet/ssl/private_keys/":
+    ensure => 'directory',
+    mode   => '0751',
+  } ->
   file { "/var/lib/puppet/ssl/private_keys/${fqdn}.pem":
     source => "/var/opt/opscode/nginx/ca/${fqdn}.key",
     ensure => 'present',

@@ -3,7 +3,7 @@ class chef::install {
   if $chef::configure_chef_repo {
     include packagecloud
 
-    $repo_type = $::osfamily ? {
+    $repo_type = $::operatingsystem ? {
       /^(RedHat|CentOS)$/ => 'rpm',
       /^(Debian|Ubuntu)$/ => 'deb',
       default             => 'gem',
@@ -15,22 +15,22 @@ class chef::install {
     }
   }
 
-  case $::osfamily {
+  case $::operatingsystem {
     'RedHat', 'CentOS': {
       package { 'chef-server-core':
         ensure => 'installed',
         source => $source,
-        provider => 'rpm'
+        provider => 'rpm',
       }
     }
     'Ubuntu': {
       package { 'chef-server-core':
         ensure => 'installed',
-        source => $source
+        source => $source,
       }
     }
     # Unfortunatelly, chef packages are built only for EL and Ubuntu
-    default: { fail("Unsupported OS family $::osfamily") }
+    default: { fail("Unsupported OS $::operatingsystem") }
   }
 
 }
